@@ -5,11 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add/Edit Product</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+          max-width: 600px;
+          margin: auto;
+          padding: 20px;
+          background-color: rgb(195, 198, 22);
+          border-radius: 12px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          margin-top: 100px;
+        }
+        .bg {
+            /* The image used */
+            background-image: url('tab.jpg');
+
+            /* Full height */
+            height: 100%;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+
+    </style>
     
 </head>
 <body>
-        </div>
-<div class="container">
+    <div class="bg">
+<div class="container" id="infoForm">
     <h1 data-th-text="${product.productID != null} ? 'Edit Product' : 'Add Product'">Add/Edit Product</h1>
     <form data-th-action="@{/products}" data-th-object="${product}" method="post">
         <input type="hidden" data-th-field="*{productID}"/>
@@ -28,10 +53,29 @@
         <div class="form-group">
             <label for="quantity">Quantity</label>
             <input type="number" data-th-field="*{quantity}" class="form-control" id="quantity" required>
+
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit">Submit</button>
         <a href="product-form.html" class="btn btn-secondary">Cancel</a>
     </form>
+</div>  
 </div>
+<script>
+    document.getElementById('infoForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const ID = document.getElementById('ID').value;
+        const name = document.getElementById('name').value;
+        const category = document.getElementById('category').value;
+        const Price = document.getElementById('Price').value;
+        const Quantity = document.getElementById('Quantity').value;
+
+
+        const data = { ID, name, category, Price, Quantity };
+        localStorage.setItem('formData', JSON.stringify(data));
+
+        window.location.href = 'products.html';
+    });
+
+</script>
 </body>
 </html>
